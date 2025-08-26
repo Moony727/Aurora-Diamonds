@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naura Diamonds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="loader-container" id="pageLoader">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+        <div class="loader-text">Loading...</div>
+    </div>
+
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <div class="logo-container">
+                <i class="fas fa-fire"></i>
+                <h1>Naura Diamonds</h1>
+            </div>
+            <div class="welcome-animation">
+                <div class="diamond"></div>
+                <div class="diamond"></div>
+                <div class="diamond"></div>
+            </div>
+            <p class="welcome-text">Your Ultimate Diamond Store</p>
+        </div>
+    </div>
+
+    <div class="app-container" id="appContainer">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-fire"></i>
+                    <h1>Naura Diamonds</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="lang-toggle" id="langToggle">
+                        <i class="fas fa-globe"></i> EN
+                    </button>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="diamonds">
+                    <i class="fas fa-gem"></i> <span data-lang="tabDiamonds">Buy Diamonds</span>
+                </button>
+                <button class="tab-button" data-tab="memberships">
+                    <i class="fas fa-crown"></i> <span data-lang="tabMemberships">Memberships</span>
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-panel active" id="diamonds">
+                    <h2 class="panel-title" data-lang="diamondsTitle">Diamond Packs</h2>
+                    <div class="diamonds-grid">
+                        <div class="diamond-card" data-diamonds="110" data-price="2">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>110</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">2 AZN</div>
+                            </div>
+                        </div>
+                        <div class="diamond-card" data-diamonds="341" data-price="5">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>341</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">5 AZN</div>
+                            </div>
+                        </div>
+                        <div class="diamond-card" data-diamonds="572" data-price="8">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>572</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">8 AZN</div>
+                            </div>
+                        </div>
+                        <div class="diamond-card" data-diamonds="1166" data-price="16">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>1166</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">16 AZN</div>
+                            </div>
+                        </div>
+                        <div class="diamond-card" data-diamonds="2398" data-price="31">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>2398</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">31 AZN</div>
+                            </div>
+                        </div>
+                        <div class="diamond-card" data-diamonds="6160" data-price="78">
+                            <div class="card-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>6160</h3>
+                                <p data-lang="diamonds">Diamonds</p>
+                                <div class="price">78 AZN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="memberships">
+                    <h2 class="panel-title" data-lang="membershipsTitle">Membership Plans</h2>
+                    <div class="memberships-list">
+                        <div class="membership-card" data-membership="Mini Weekly" data-price="1">
+                            <div class="card-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 data-lang="miniWeekly">Mini Weekly</h3>
+                                <p data-lang="weeklyPass">Weekly Pass</p>
+                                <div class="price">1 AZN</div>
+                            </div>
+                        </div>
+                        <div class="membership-card" data-membership="Weekly" data-price="3.50">
+                            <div class="card-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 data-lang="weekly">Weekly</h3>
+                                <p data-lang="weeklyPass">Weekly Pass</p>
+                                <div class="price">3.50 AZN</div>
+                            </div>
+                        </div>
+                        <div class="membership-card" data-membership="Monthly" data-price="12">
+                            <div class="card-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 data-lang="monthly">Monthly</h3>
+                                <p data-lang="monthlyPass">Monthly Pass</p>
+                                <div class="price">12 AZN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-lang="purchaseDetails">Purchase Details</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="purchase-info">
+                    <div class="info-row">
+                        <span data-lang="item">Item:</span>
+                        <span id="itemName" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span data-lang="price">Price:</span>
+                        <span id="itemPrice" class="info-value"></span> AZN
+                    </div>
+                </div>
+                <form id="purchaseForm">
+                    <div class="form-group">
+                        <label data-lang="name">Name *</label>
+                        <input type="text" id="userName" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="whatsapp">WhatsApp Number *</label>
+                        <div class="phone-input">
+                            <span class="phone-prefix">+</span>
+                            <input type="tel" id="userPhone" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" data-lang="buyNow">Buy Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
