@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
     // Translation data
     const translations = {
         en: {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             membershipsTitle: "Планы Подписок",
             miniWeekly: "Weekly Lite",
             weekly: "Weekly",
-            monthly: "Monthly", // Fixed typo: was "Montly"
+            monthly: "Monthly",
             weeklyPass: "Недельный Пропуск",
             monthlyPass: "Месячный Пропуск",
             purchaseDetails: "Детали Покупки",
@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currency: "AZN"
         }
     };
+
     // App state
     let currentLang = 'en';
     
@@ -99,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const isSweetAlert2Available = typeof Swal !== 'undefined';
     
     // Telegram Bot Configuration
-    const TELEGRAM_BOT_TOKEN = '8399411682:AAHBkaAkVhPd0tag4d4Q7AdJpnctqFTeR1w'; // Replace with your bot token
-    const TELEGRAM_CHAT_ID = '-1003071169212'; // Replace with your chat ID
+    const TELEGRAM_BOT_TOKEN = '8399411682:AAHBkaAkVhPd0tag4d4Q7AdJpnctqFTeR1w';
+    const TELEGRAM_CHAT_ID = '-1003071169212';
     
     // Cookie functions
     function getCookie(name) {
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Loader functions
+    // Loader functions with safety checks
     function showLoader() {
         if (pageLoader) {
             pageLoader.style.display = 'flex';
@@ -191,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
-            // Use fetch with a fallback for older browsers
             if (window.fetch) {
                 const response = await fetch(url, {
                     method: 'POST',
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 return true;
             } else {
-                // Fallback for browsers that don't support fetch
+                // Fallback for older browsers
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -337,10 +337,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const userName = userNameElement.value.trim();
             const userPhone = userPhoneElement.value.trim();
             
-            // Basic phone number validation (international format)
+            // Basic phone number validation
             const phoneRegex = /^\+?[0-9]{10,15}$/;
             
-            // Validate fields
             if (!userName) {
                 showNotification(
                     translations[currentLang].errorTitle,
@@ -368,10 +367,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Show loader
             showLoader();
             
-            // Prepare message for Telegram
             const itemNameElement = getElement('itemName');
             const itemPriceElement = getElement('itemPrice');
             
@@ -389,17 +386,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const itemPrice = itemPriceElement.textContent;
             const currency = translations[currentLang].currency;
             const message = `
-<b>Yeni Sifaris!</b>
-<b>Mehsul:</b> ${itemName}
-<b>Qiymet:</b> ${itemPrice} ${currency}
-<b>Ad:</b> ${userName}
+<b>New Order!</b>
+<b>Item:</b> ${itemName}
+<b>Price:</b> ${itemPrice} ${currency}
+<b>Name:</b> ${userName}
 <b>WhatsApp:</b> +${userPhone.replace(/\D/g, '')}
             `;
             
-            // Send to Telegram
             const telegramSuccess = await sendToTelegram(message);
             
-            // Simulate processing time
             setTimeout(() => {
                 hideLoader();
                 
@@ -450,42 +445,72 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize app
+    // Initialize app with error handling and loader management
     function initApp() {
-        // Set theme from cookie
-        const savedTheme = getCookie('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            if (themeToggle) {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        try {
+            // Check for critical elements
+            if (!pageLoader || !welcomeScreen || !appContainer) {
+                console.error('Required DOM elements not found');
+                hideLoader();
+                return;
             }
-        }
-        
-        // Set language from cookie
-        const savedLang = getCookie('language');
-        if (savedLang && translations[savedLang]) {
-            setLanguage(savedLang);
-        } else {
-            setLanguage('en');
-        }
-        
-        // Hide welcome screen after a delay
-        if (welcomeScreen && appContainer) {
-            setTimeout(() => {
-                welcomeScreen.classList.add('hidden');
+            
+            // Set theme from cookie
+            const savedTheme = getCookie('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (themeToggle) {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+            
+            // Set language from cookie
+            const savedLang = getCookie('language');
+            if (savedLang && translations[savedLang]) {
+                setLanguage(savedLang);
+            } else {
+                setLanguage('en');
+            }
+            
+            // Hide welcome screen after a delay
+            if (welcomeScreen && appContainer) {
                 setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                    appContainer.style.display = 'block';
-                }, 800);
-            }, 3000);
+                    welcomeScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        welcomeScreen.style.display = 'none';
+                        appContainer.style.display = 'block';
+                    }, 800);
+                }, 3000);
+            }
+            
+            // Ensure loader is hidden after initialization
+            setTimeout(() => {
+                hideLoader();
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+            hideLoader(); // Ensure loader is hidden even if there's an error
         }
-        
-        // Hide initial loader after a short delay
-        setTimeout(() => {
-            hideLoader();
-        }, 2000);
     }
     
-    // Start the app
-    initApp();
-});
+    // Proper initialization check - only one event listener
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        // Document already loaded, initialize immediately
+        initApp();
+    } else {
+        // Document not loaded yet, wait for DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    }
+    
+    // Global error handler to catch unhandled errors
+    window.addEventListener('error', function(event) {
+        console.error('Global error:', event.error);
+        hideLoader(); // Ensure loader is hidden on any error
+    });
+    
+    // Failsafe: Hide loader after maximum time
+    setTimeout(() => {
+        hideLoader();
+    }, 5000);
+})();
