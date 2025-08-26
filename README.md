@@ -13,7 +13,7 @@
 
 ## 💎 Прайс-лист
 
-### Elmas
+### Алмазы
 - 110 — 2 AZN  
 - 341 — 5 AZN  
 - 572 — 8 AZN  
@@ -21,7 +21,7 @@
 - 2398 — 31 AZN  
 - 6160 — 78 AZN  
 
-### Üzvlüklər
+### Подписки
 - Mini Həftəlik — 1 AZN  
 - Həftəlik — 3.5 AZN  
 - Aylıq — 12 AZN 
